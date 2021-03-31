@@ -7,24 +7,24 @@ pipeline {
             }
             post {
                 success {
-                    echo 'Now Archiving......'
+                    echo 'Now Archiving...'
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
-        stage ('Deploy to staging'){
+        stage ('Deploy to Staging'){
             steps {
-                build job: 'deploy-to-stage'
+                build job: 'Deploy-to-staging'
             }
-
         }
-        stage ('Deploy to production'){
+
+        stage ('Deploy to Production'){
             steps{
                 timeout(time:5, unit:'DAYS'){
                     input message:'Approve PRODUCTION Deployment?'
                 }
 
-                build job: 'deploy-to-prod'
+                build job: 'Deploy-to-Prod'
             }
             post {
                 success {
@@ -32,9 +32,11 @@ pipeline {
                 }
 
                 failure {
-                    echo 'Deployment failed'
+                    echo ' Deployment failed.'
                 }
             }
         }
+
+
     }
 }
